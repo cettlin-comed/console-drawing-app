@@ -6,13 +6,13 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class CanvasInputValidatorTest {
+class CanvasInputValidatonTest {
 
     val testInputValidator = InputValidator(20, 10)
 
     @Test
     fun testValidCanvasInput() {
-        val args = testInputValidator.parseAndValidateInput("C", listOf("5", "10"))
+        val args = testInputValidator.parseAndValidateCanvasInput(listOf("5", "10"))
         assertEquals(args[0], 5)
         assertEquals(args[1], 10)
     }
@@ -20,17 +20,17 @@ class CanvasInputValidatorTest {
     @Test
     fun testInvalidCanvasInput() {
         assertFailsWith<InputValueException>(
-            block = { testInputValidator.parseAndValidateInput("C", listOf("-1", "2"))}
+            block = { testInputValidator.parseAndValidateCanvasInput(listOf("-1", "2"))}
         )
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("C", listOf("2", "0"))
+            testInputValidator.parseAndValidateCanvasInput(listOf("2", "0"))
         }
     }
 
     @Test
     fun testMissingCanvasInput() {
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("C", listOf("1"))
+            testInputValidator.parseAndValidateCanvasInput(listOf("1"))
         }
     }
 }

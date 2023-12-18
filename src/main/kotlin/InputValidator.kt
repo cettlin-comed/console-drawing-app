@@ -3,23 +3,6 @@ import java.lang.Integer.parseInt
 
 class InputValidator(private var w: Int, private var h: Int) {
 
-    fun parseAndValidateInput(command: String, args: List<String>): List<Int> {
-        try {
-            return when (command) {
-                "C"         -> parseAndValidateCanvasInput(args)
-                "L"         -> parseAndValidateLineInput(args)
-                "R"         -> parseAndValidateRectangleInput(args)
-                "B"         -> parseAndValidateFillInput(args)
-                "Q"         -> emptyList()
-                else   -> throw InputValueException("Input must start with one of the following letters: C, L, R, B, Q")
-            }
-        } catch (e: IllegalArgumentException) {
-            throw InputValueException("Input must be a letter followed by a list of numbers, separated by space.")
-        } catch (e: IndexOutOfBoundsException) {
-            throw InputValueException("Not enough input arguments provided for chosen function.")
-        }
-    }
-
     fun parseAndValidateCanvasInput(args: List<String>) : List<Int> {
         if (args.size != 2) throw InputValueException("The C command expects 2 integer arguments, but " + args.size + " were provided.")
         val intArgs = args.map {

@@ -6,14 +6,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class FillInputValidatorTest {
+class FillInputValidatonTest {
 
     val testInputValidator = InputValidator(20, 10)
 
     @Test
     fun testValidFillInput() {
         val inputArgs = listOf("1", "2", "c")
-        val args = testInputValidator.parseAndValidateInput("B", inputArgs)
+        val args = testInputValidator.parseAndValidateFillInput(inputArgs)
         assertEquals(args[0], Integer.parseInt(inputArgs[0]))
         assertEquals(args[1], Integer.parseInt(inputArgs[1]))
         assertEquals(args.size, 2)
@@ -24,7 +24,7 @@ class FillInputValidatorTest {
     fun testInvalidFillInput() {
         val inputArgs = listOf("1", "2", "3", "4")
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("B", inputArgs)
+            testInputValidator.parseAndValidateFillInput(inputArgs)
         }
     }
 
@@ -32,11 +32,11 @@ class FillInputValidatorTest {
     fun testMissingFillInput() {
         val inputArgs = listOf("1", "2")
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("B", inputArgs)
+            testInputValidator.parseAndValidateFillInput(inputArgs)
         }
         val inputArgs2 = listOf("1", "c")
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("B", inputArgs2)
+            testInputValidator.parseAndValidateFillInput(inputArgs2)
         }
     }
 
@@ -44,7 +44,7 @@ class FillInputValidatorTest {
     fun testOutOfBoundsFillInput() {
         val inputArgs = listOf("1", "2", "1", "100")
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("B", inputArgs)
+            testInputValidator.parseAndValidateFillInput(inputArgs)
         }
     }
 
@@ -52,7 +52,7 @@ class FillInputValidatorTest {
     fun testStringFillInput() {
         val inputArgs = listOf("1", "2", "test")
         assertFailsWith<InputValueException> {
-            testInputValidator.parseAndValidateInput("B", inputArgs)
+            testInputValidator.parseAndValidateFillInput(inputArgs)
         }
     }
 }
