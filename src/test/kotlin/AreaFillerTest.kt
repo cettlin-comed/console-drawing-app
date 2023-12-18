@@ -1,6 +1,5 @@
 import helpers.AreaFillerHelper
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import kotlin.test.AfterTest
 
@@ -22,15 +21,22 @@ class AreaFillerTest {
         testCanvas = Canvas(emptyCanvasW, emptyCanvasH)
         val emptyAreaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
         emptyAreaFiller.fillIn(1,1)
-        for (i in 1..emptyCanvasW) {
-            for (j in 1..emptyCanvasH) {
-                assertTrue(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-        for (i in 1..emptyCanvasW) {
-            assertFalse(testCanvas.canvasArray[0][i] == 'c')
-            assertFalse(testCanvas.canvasArray[emptyCanvasH+1][i] == 'c')
-        }
+        val resultCanvas = readCanvas(
+"""------------
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+------------
+""", 10, 10)
+
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
@@ -38,14 +44,32 @@ class AreaFillerTest {
         testCanvas = createTestCanvas()
         val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
         areaFiller.fillIn(1,1)
-        for (i in 1..20) {
-            assertTrue(testCanvas.canvasArray[i][1] == 'c')
-            assertTrue(testCanvas.canvasArray[i][2] == 'c')
-            assertFalse(testCanvas.canvasArray[i][0] == 'c')
-            for (j in 3..20) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""----------------------
+|ccx                 |
+|ccx xxxxxx          |
+|ccx                 |
+|ccx                 |
+|ccx                 |
+|ccx                 |
+|ccx                 |
+|ccx    xxxxxxxx     |
+|ccx    x      x     |
+|ccx    x      x     |
+|ccx    x      x     |
+|ccx    x      x     |
+|ccx    x      x     |
+|ccx    x      x     |
+|ccx    xxxxxxxx     |
+|ccx                 |
+|ccx                 |
+|ccx              xxx|
+|ccx              x x|
+|ccx              xxx|
+----------------------
+""", 20, 20)
+
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
@@ -53,45 +77,32 @@ class AreaFillerTest {
         testCanvas = createTestCanvas()
         val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
         areaFiller.fillIn(5,1)
-        for (i in 0..21) {
-            for (j in 0..3) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-            assertFalse(testCanvas.canvasArray[i][21] == 'c')
-        }
+        val resultCanvas = readCanvas(
+"""----------------------
+|  xccccccccccccccccc|
+|  xcxxxxxxcccccccccc|
+|  xccccccccccccccccc|
+|  xccccccccccccccccc|
+|  xccccccccccccccccc|
+|  xccccccccccccccccc|
+|  xccccccccccccccccc|
+|  xccccxxxxxxxxccccc|
+|  xccccx      xccccc|
+|  xccccx      xccccc|
+|  xccccx      xccccc|
+|  xccccx      xccccc|
+|  xccccx      xccccc|
+|  xccccx      xccccc|
+|  xccccxxxxxxxxccccc|
+|  xccccccccccccccccc|
+|  xccccccccccccccccc|
+|  xccccccccccccccxxx|
+|  xccccccccccccccx x|
+|  xccccccccccccccxxx|
+----------------------
+""", 20, 20)
 
-        for (i in 5..10) {
-            assertFalse(testCanvas.canvasArray[2][i] == 'c')
-            assertTrue(testCanvas.canvasArray[3][i] == 'c')
-            assertTrue(testCanvas.canvasArray[1][i] == 'c')
-        }
-
-        for (i in 4..7) {
-            for (j in 4..20) {
-                assertTrue(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-
-        for (i in 8..15) {
-            for (j in 4..7) {
-                assertTrue(testCanvas.canvasArray[i][j] == 'c')
-            }
-            for (j in 8..15) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-            for (j in 16..20) {
-                assertTrue(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-
-        for (i in 18..20) {
-            for (j in 4..17) {
-                assertTrue(testCanvas.canvasArray[i][j] == 'c')
-            }
-            for (j in 18..21) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
@@ -100,28 +111,31 @@ class AreaFillerTest {
         val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
         areaFiller.fillIn(19,19)
         areaFiller.fillIn(12,12)
-        for (i in 0..8) {
-            for (j in 0..20) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-        for (i in 9..14) {
-            for (j in 0..8) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-            for (j in 9..14) {
-                assertTrue(testCanvas.canvasArray[i][j] == 'c')
-            }
-            for (j in 15..21) {
-                assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-        for (i in 15..21) {
-            for (j in 0..20) {
-                if (j == 19 && i == 19) assertTrue(testCanvas.canvasArray[i][j] == 'c')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""----------------------
+|  x                 |
+|  x xxxxxx          |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x    xxxxxxxx     |
+|  x    xccccccx     |
+|  x    xccccccx     |
+|  x    xccccccx     |
+|  x    xccccccx     |
+|  x    xccccccx     |
+|  x    xccccccx     |
+|  x    xxxxxxxx     |
+|  x                 |
+|  x                 |
+|  x              xxx|
+|  x              xcx|
+|  x              xxx|
+----------------------
+""", 20, 20)
+    assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
@@ -129,23 +143,30 @@ class AreaFillerTest {
         testCanvas = createTestCanvas()
         val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
         areaFiller.fillIn(8,8)
-        for (i in 0..8) {
-            for (j in 0..21) {
-                if (i == 8 && j >= 8 && j <= 15) assertTrue(testCanvas.canvasArray[i][j] == 'c')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-        for (i in 9..14) {
-            for (j in 0..21) {
-                if (j == 8 || j == 15) assertTrue(testCanvas.canvasArray[i][j] == 'c')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
-        for (i in 15..21) {
-            for (j in 0..21) {
-                if (i == 15 && j >= 8 && j <= 15) assertTrue(testCanvas.canvasArray[i][j] == 'c')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'c')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""----------------------
+|  x                 |
+|  x xxxxxx          |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x    cccccccc     |
+|  x    c      c     |
+|  x    c      c     |
+|  x    c      c     |
+|  x    c      c     |
+|  x    c      c     |
+|  x    c      c     |
+|  x    cccccccc     |
+|  x                 |
+|  x                 |
+|  x              xxx|
+|  x              x x|
+|  x              xxx|
+----------------------
+""", 20, 20)
+        assertEquals(resultCanvas, testCanvas)
     }
 }

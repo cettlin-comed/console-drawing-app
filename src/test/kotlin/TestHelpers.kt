@@ -31,3 +31,15 @@ fun createTestCanvas() : Canvas {
 |  x              xxx|
 ----------------------
 */
+
+fun readCanvas(input: String, w: Int, h: Int) : Canvas {
+    val canvas = Canvas(w, h)
+    val sanitizedInput = input.trimIndent().replace("\n", "")
+    for (i in 0..h+1) {
+        for (j in 0..w+1) {
+            val index = i*(w+2) + j
+            canvas.canvasArray[i][j] = sanitizedInput[index]
+        }
+    }
+    return canvas
+}

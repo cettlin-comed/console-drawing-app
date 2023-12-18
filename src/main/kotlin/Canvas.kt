@@ -57,4 +57,14 @@ class Canvas(w: Int, h: Int) {
         areaFiller.fillIn(x,y)
     }
 
+    override fun equals(other: Any?): Boolean =
+        (other is Canvas) && canvasArray.contentDeepEquals(other.canvasArray)
+
+    override fun toString(): String {
+       var s = ""
+        for (line in canvasArray) {
+            s += String(line) + "\n"
+        }
+        return s
+    }
 }

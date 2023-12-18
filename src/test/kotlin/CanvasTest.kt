@@ -1,5 +1,4 @@
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import kotlin.test.AfterTest
 
@@ -23,12 +22,22 @@ class CanvasTest {
         val y1 = 2
         val y2 = emptyCanvasH -1
         testCanvas.drawLine(x1,y1,x2,y2)
-        for (i in 0..emptyCanvasH + 1) {
-            for (j in 1..emptyCanvasW + 1) {
-                if (i in y1..y2 && j == x1) assertTrue(testCanvas.canvasArray[i][j] == 'x')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'x')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""------------
+|          |
+| x        |
+| x        |
+| x        |
+| x        |
+| x        |
+| x        |
+| x        |
+| x        |
+|          |
+------------
+""", 10, 10)
+
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
@@ -39,12 +48,47 @@ class CanvasTest {
         val y1 = 2
         val y2 = 2
         testCanvas.drawLine(x1,y1,x2,y2)
-        for (i in 0..emptyCanvasH + 1) {
-            for (j in 0..emptyCanvasW + 1) {
-                if (j in x1..x2 && i == y1) assertTrue(testCanvas.canvasArray[i][j] == 'x')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'x')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""------------
+|          |
+| xxxxxxxx |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+------------
+""", 10, 10)
+
+        assertEquals(resultCanvas, testCanvas)
+    }
+
+    @Test
+    fun testDrawMultipleLines() {
+        testCanvas = Canvas(emptyCanvasW, emptyCanvasH)
+        testCanvas.drawLine(2, 2, 4, 2)
+        testCanvas.drawLine(7, 7, 9, 7)
+        testCanvas.drawLine(3, 3, 3, 10)
+        testCanvas.drawLine(3, 8, 10, 8)
+        val resultCanvas = readCanvas(
+"""------------
+|          |
+| xxx      |
+|  x       |
+|  x       |
+|  x       |
+|  x       |
+|  x   xxx |
+|  xxxxxxxx|
+|  x       |
+|  x       |
+------------
+""", 10, 10)
+
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
@@ -55,13 +99,46 @@ class CanvasTest {
         val y1 = 2
         val y2 = emptyCanvasH -1
         testCanvas.drawRectangle(x1,y1,x2,y2)
-        for (i in 0..emptyCanvasH + 1) {
-            for (j in 0..emptyCanvasW + 1) {
-                if ((i == y1 || i == y2) && j in x1..x2) assertTrue(testCanvas.canvasArray[i][j] == 'x')
-                else if ((j == x1 || j == x2) && i in y1..y2) assertTrue(testCanvas.canvasArray[i][j] == 'x')
-                else assertFalse(testCanvas.canvasArray[i][j] == 'x')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""------------
+|          |
+| xxxxxxxx |
+| x      x |
+| x      x |
+| x      x |
+| x      x |
+| x      x |
+| x      x |
+| xxxxxxxx |
+|          |
+------------
+""", 10, 10)
+
+        assertEquals(resultCanvas, testCanvas)
+    }
+
+    @Test
+    fun testDrawMultipleRectangles() {
+        testCanvas = Canvas(emptyCanvasW, emptyCanvasH)
+        testCanvas.drawRectangle(2,3, 7,5)
+        testCanvas.drawRectangle(1,1,1,1)
+        testCanvas.drawRectangle(4, 1, 9, 9)
+        val resultCanvas = readCanvas(
+"""------------
+|x  xxxxxx |
+|   x    x |
+| xxxxxx x |
+| x x  x x |
+| xxxxxx x |
+|   x    x |
+|   x    x |
+|   x    x |
+|   xxxxxx |
+|          |
+------------
+""", 10, 10)
+
+        assertEquals(resultCanvas, testCanvas)
     }
 
 
