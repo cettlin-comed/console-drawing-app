@@ -7,7 +7,6 @@ class CanvasControllerTest {
     var testController = CanvasController()
     val defaultW = 10
     val defaultH = 10
-    val defaultSize = 12 * 12
 
     @BeforeTest
     fun resetController() {
@@ -25,7 +24,22 @@ class CanvasControllerTest {
         assertFailsWith<InputValueException> {
             testController.execute("S", emptyList())
         }
-        assertEquals(defaultSize, getCanvasSize())
+        val resultCanvas = readCanvas(
+            """------------
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
     }
 
     @Test
@@ -33,7 +47,18 @@ class CanvasControllerTest {
         val args = listOf("5", "6")
         testController.execute("C", args)
 
-        assertEquals(7*8, getCanvasSize())
+        val resultCanvas = readCanvas(
+            """-------
+|     |
+|     |
+|     |
+|     |
+|     |
+|     |
+-------
+""", 5, 6
+        )
+        assertEquals(resultCanvas, testController.canvas)
     }
 
     @Test
@@ -42,6 +67,23 @@ class CanvasControllerTest {
         assertFailsWith<InputValueException>(
             block = { testController.execute("C", args) }
         )
+
+        val resultCanvas = readCanvas(
+            """------------
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
     }
 
     @Test
@@ -53,14 +95,22 @@ class CanvasControllerTest {
         val args = listOf(x1.toString(), y1.toString(), x2.toString(), y2.toString())
         testController.execute("L", args)
 
-        assertEquals(defaultSize, getCanvasSize())
-
-        for (i in 0..defaultH) {
-            for (j in 0..defaultW) {
-                if (j == x1 && i in y1..y2) assertTrue(testController.canvas.getPixel(j,i) == 'x')
-                else assertFalse(testController.canvas.getPixel(j,i) == 'x')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""------------
+|x         |
+|x         |
+|x         |
+|x         |
+|x         |
+|x         |
+|x         |
+|x         |
+|x         |
+|x         |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
     }
 
     @Test
@@ -73,7 +123,22 @@ class CanvasControllerTest {
         assertFailsWith<InputValueException>(
             block = { testController.execute("L", args) }
         )
-        assertEquals(defaultSize, getCanvasSize())
+        val resultCanvas = readCanvas(
+            """------------
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
     }
 
     @Test
@@ -85,15 +150,22 @@ class CanvasControllerTest {
         val args = listOf(x1.toString(), y1.toString(), x2.toString(), y2.toString())
         testController.execute("R", args)
 
-        assertEquals(defaultSize, getCanvasSize())
-
-        for (i in 0..defaultH) {
-            for (j in 0..defaultW) {
-                if ((j == x1 || j == x2) && i in y1..y2) assertTrue(testController.canvas.getPixel(j,i) == 'x')
-                else if ((i == y1 || i == y2) && j in x1..x2) assertTrue(testController.canvas.getPixel(j,i) == 'x')
-                else assertFalse(testController.canvas.getPixel(j,i) == 'x')
-            }
-        }
+        val resultCanvas = readCanvas(
+"""------------
+|          |
+| xxxxxxx  |
+| x     x  |
+| x     x  |
+| x     x  |
+| x     x  |
+| x     x  |
+| xxxxxxx  |
+|          |
+|          |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
     }
 
     @Test
@@ -106,7 +178,22 @@ class CanvasControllerTest {
         assertFailsWith<InputValueException>(
             block = { testController.execute("R", args) }
         )
-        assertEquals(defaultSize, getCanvasSize())
+        val resultCanvas = readCanvas(
+            """------------
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
 
     }
 
@@ -118,15 +205,22 @@ class CanvasControllerTest {
         val args = listOf(x.toString(), y.toString(), c)
         testController.execute("B", args)
 
-        assertEquals(defaultSize, getCanvasSize())
-
-        for (i in 1..defaultH) {
-            for (j in 1..defaultW) {
-                assertTrue(testController.canvas.getPixel(j,i) == 'c')
-            }
-            assertFalse(testController.canvas.getPixel(0,0) == 'c')
-            assertFalse(testController.canvas.getPixel(defaultW+1, defaultH+1) == 'c')
-        }
+        val resultCanvas = readCanvas(
+            """------------
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+|cccccccccc|
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
 
     }
 
@@ -139,9 +233,24 @@ class CanvasControllerTest {
         assertFailsWith<InputValueException>(
             block = { testController.execute("B", args) }
         )
-    }
 
-    private fun getCanvasSize() : Int = (testController.canvas.h + 2) * (testController.canvas.w + 2)
+        val resultCanvas = readCanvas(
+            """------------
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+|          |
+------------
+""", 10, 10
+        )
+        assertEquals(resultCanvas, testController.canvas)
+    }
 
 
 }
