@@ -38,7 +38,7 @@ fun readCanvas(input: String, w: Int, h: Int) : Canvas {
     for (i in 0..h+1) {
         for (j in 0..w+1) {
             val index = i*(w+2) + j
-            canvas.canvasArray[i][j] = sanitizedInput[index]
+            canvas.setPixel(j, i, sanitizedInput[index])
         }
     }
     return canvas

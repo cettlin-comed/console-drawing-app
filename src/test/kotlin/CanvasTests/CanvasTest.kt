@@ -1,5 +1,9 @@
+package CanvasTests
+
+import Canvas
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import readCanvas
 import kotlin.test.AfterTest
 
 class CanvasTest {
@@ -23,7 +27,7 @@ class CanvasTest {
         val y2 = emptyCanvasH -1
         testCanvas.drawLine(x1,y1,x2,y2)
         val resultCanvas = readCanvas(
-"""------------
+            """------------
 |          |
 | x        |
 | x        |
@@ -35,7 +39,8 @@ class CanvasTest {
 | x        |
 |          |
 ------------
-""", 10, 10)
+""", 10, 10
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -61,7 +66,8 @@ class CanvasTest {
 |          |
 |          |
 ------------
-""", 10, 10)
+""", 10, 10
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -86,7 +92,8 @@ class CanvasTest {
 |  x       |
 |  x       |
 ------------
-""", 10, 10)
+""", 10, 10
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -112,7 +119,8 @@ class CanvasTest {
 | xxxxxxxx |
 |          |
 ------------
-""", 10, 10)
+""", 10, 10
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -136,7 +144,8 @@ class CanvasTest {
 |   xxxxxx |
 |          |
 ------------
-""", 10, 10)
+""", 10, 10
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }

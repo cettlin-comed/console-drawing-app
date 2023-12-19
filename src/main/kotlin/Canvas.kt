@@ -1,8 +1,8 @@
-import helpers.AreaFillerHelper
 
-class Canvas(w: Int, h: Int) {
 
-    val canvasArray: Array<CharArray> = initializeCanvas(w, h)
+class Canvas(val w: Int, val h: Int) {
+
+    private val canvasArray: Array<CharArray> = initializeCanvas(w, h)
 
     private fun initializeCanvas(w: Int, h: Int) : Array<CharArray> {
         val canvasArray = Array(h + 2) { CharArray(w + 2) { ' ' } }
@@ -33,7 +33,7 @@ class Canvas(w: Int, h: Int) {
         val start = y1.coerceAtMost(y2)
         val end = y1.coerceAtLeast(y2)
         for (i in start..end) {
-            canvasArray[i][x] = 'x'
+            setPixel(x, i, 'x')
         }
     }
 
@@ -41,7 +41,7 @@ class Canvas(w: Int, h: Int) {
         val start = x1.coerceAtMost(x2)
         val end = x1.coerceAtLeast(x2)
         for (i in start..end) {
-            canvasArray[y][i] = 'x'
+            setPixel(i, y, 'x')
         }
     }
 
@@ -53,8 +53,25 @@ class Canvas(w: Int, h: Int) {
     }
 
     fun fillArea(x: Int, y: Int, newColor: Char) {
-        val areaFiller = AreaFillerHelper(newColor, canvasArray)
-        areaFiller.fillIn(x,y)
+        val previous = canvasArray[y][x]
+        val q: ArrayDeque<Pair<Int, Int>> = ArrayDeque()
+        q.add(Pair(x,y))
+        while (!q.isEmpty()) {
+            val p = q.removeFirst()
+            if (getPixel(p.first, p.second) == previous) {
+                setPixel(p.first, p.second, newColor)
+                if (p.second > 1) q.add(Pair(p.first, p.second-1))
+                if (p.first > 1) q.add(Pair(p.first-1, p.second))
+                if (p.first < w) q.add(Pair(p.first+1, p.second))
+                if (p.second < h) q.add(Pair(p.first, p.second+1))
+            }
+        }
+    }
+
+    fun getPixel(x: Int, y: Int) : Char = canvasArray[y][x]
+
+    fun setPixel(x: Int, y: Int, c: Char) {
+        canvasArray[y][x] = c
     }
 
     override fun equals(other: Any?): Boolean =

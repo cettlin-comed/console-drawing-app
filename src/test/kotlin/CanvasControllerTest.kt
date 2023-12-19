@@ -57,8 +57,8 @@ class CanvasControllerTest {
 
         for (i in 0..defaultH) {
             for (j in 0..defaultW) {
-                if (j == x1 && i in y1..y2) assertTrue(testController.canvas.canvasArray[i][j] == 'x')
-                else assertFalse(testController.canvas.canvasArray[i][j] == 'x')
+                if (j == x1 && i in y1..y2) assertTrue(testController.canvas.getPixel(j,i) == 'x')
+                else assertFalse(testController.canvas.getPixel(j,i) == 'x')
             }
         }
     }
@@ -89,9 +89,9 @@ class CanvasControllerTest {
 
         for (i in 0..defaultH) {
             for (j in 0..defaultW) {
-                if ((j == x1 || j == x2) && i in y1..y2) assertTrue(testController.canvas.canvasArray[i][j] == 'x')
-                else if ((i == y1 || i == y2) && j in x1..x2) assertTrue(testController.canvas.canvasArray[i][j] == 'x')
-                else assertFalse(testController.canvas.canvasArray[i][j] == 'x')
+                if ((j == x1 || j == x2) && i in y1..y2) assertTrue(testController.canvas.getPixel(j,i) == 'x')
+                else if ((i == y1 || i == y2) && j in x1..x2) assertTrue(testController.canvas.getPixel(j,i) == 'x')
+                else assertFalse(testController.canvas.getPixel(j,i) == 'x')
             }
         }
     }
@@ -122,10 +122,10 @@ class CanvasControllerTest {
 
         for (i in 1..defaultH) {
             for (j in 1..defaultW) {
-                assertTrue(testController.canvas.canvasArray[i][j] == 'c')
+                assertTrue(testController.canvas.getPixel(j,i) == 'c')
             }
-            assertFalse(testController.canvas.canvasArray[0][0] == 'c')
-            assertFalse(testController.canvas.canvasArray[defaultH+1][defaultW+1] == 'c')
+            assertFalse(testController.canvas.getPixel(0,0) == 'c')
+            assertFalse(testController.canvas.getPixel(defaultW+1, defaultH+1) == 'c')
         }
 
     }
@@ -141,12 +141,7 @@ class CanvasControllerTest {
         )
     }
 
-    private fun getCanvasSize() : Int {
-        var totalSize = 0
-        for (line in testController.canvas.canvasArray) {
-            totalSize += line.size
-        }
-        return totalSize
-    }
+    private fun getCanvasSize() : Int = (testController.canvas.h + 2) * (testController.canvas.w + 2)
+
 
 }

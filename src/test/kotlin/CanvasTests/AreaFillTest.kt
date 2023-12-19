@@ -1,10 +1,14 @@
-import helpers.AreaFillerHelper
+package CanvasTests
+
+import Canvas
+import createTestCanvas
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import readCanvas
 import kotlin.test.AfterTest
 
 
-class AreaFillerTest {
+class AreaFillTest {
 
     val emptyCanvasW = 10
     val emptyCanvasH = 10
@@ -19,10 +23,9 @@ class AreaFillerTest {
     @Test
     fun testFillInEmptyCanvas() {
         testCanvas = Canvas(emptyCanvasW, emptyCanvasH)
-        val emptyAreaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
-        emptyAreaFiller.fillIn(1,1)
+        testCanvas.fillArea(1,1, 'c')
         val resultCanvas = readCanvas(
-"""------------
+            """------------
 |cccccccccc|
 |cccccccccc|
 |cccccccccc|
@@ -34,7 +37,8 @@ class AreaFillerTest {
 |cccccccccc|
 |cccccccccc|
 ------------
-""", 10, 10)
+""", 10, 10
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -42,10 +46,9 @@ class AreaFillerTest {
     @Test
     fun testFillStraightArea() {
         testCanvas = createTestCanvas()
-        val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
-        areaFiller.fillIn(1,1)
+        testCanvas.fillArea(1,1, 'c')
         val resultCanvas = readCanvas(
-"""----------------------
+            """----------------------
 |ccx                 |
 |ccx xxxxxx          |
 |ccx                 |
@@ -67,7 +70,8 @@ class AreaFillerTest {
 |ccx              x x|
 |ccx              xxx|
 ----------------------
-""", 20, 20)
+""", 20, 20
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -75,10 +79,9 @@ class AreaFillerTest {
     @Test
     fun testFillComplexArea() {
         testCanvas = createTestCanvas()
-        val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
-        areaFiller.fillIn(5,1)
+        testCanvas.fillArea(5,1, 'c')
         val resultCanvas = readCanvas(
-"""----------------------
+            """----------------------
 |  xccccccccccccccccc|
 |  xcxxxxxxcccccccccc|
 |  xccccccccccccccccc|
@@ -100,7 +103,8 @@ class AreaFillerTest {
 |  xccccccccccccccx x|
 |  xccccccccccccccxxx|
 ----------------------
-""", 20, 20)
+""", 20, 20
+        )
 
         assertEquals(resultCanvas, testCanvas)
     }
@@ -108,11 +112,10 @@ class AreaFillerTest {
     @Test
     fun testFillInRectangle() {
         testCanvas = createTestCanvas()
-        val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
-        areaFiller.fillIn(19,19)
-        areaFiller.fillIn(12,12)
+        testCanvas.fillArea(19,19, 'c')
+        testCanvas.fillArea(12,12, 'c')
         val resultCanvas = readCanvas(
-"""----------------------
+            """----------------------
 |  x                 |
 |  x xxxxxx          |
 |  x                 |
@@ -134,17 +137,17 @@ class AreaFillerTest {
 |  x              xcx|
 |  x              xxx|
 ----------------------
-""", 20, 20)
+""", 20, 20
+        )
     assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
     fun testFillRectangleOutline() {
         testCanvas = createTestCanvas()
-        val areaFiller = AreaFillerHelper('c', testCanvas.canvasArray)
-        areaFiller.fillIn(8,8)
+        testCanvas.fillArea(8,8, 'c')
         val resultCanvas = readCanvas(
-"""----------------------
+            """----------------------
 |  x                 |
 |  x xxxxxx          |
 |  x                 |
@@ -166,7 +169,8 @@ class AreaFillerTest {
 |  x              x x|
 |  x              xxx|
 ----------------------
-""", 20, 20)
+""", 20, 20
+        )
         assertEquals(resultCanvas, testCanvas)
     }
 }
