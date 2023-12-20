@@ -17,12 +17,11 @@ class CanvasCommandTest {
 
     @Test
     fun testValidCanvasInput() {
-        val command = CanvasCommand()
         val inputArgs = listOf("5", "10")
-        val args = command.validate(inputArgs)
+        val args = CanvasCommand.validate(inputArgs)
         assertEquals(args[0], 5)
         assertEquals(args[1], 10)
-        val computedCanvas = command.execute(inputArgs)
+        CanvasCommand.execute(testCanvas, inputArgs)
         val resultCanvas = readCanvas(
             """
 -------
@@ -39,25 +38,23 @@ class CanvasCommandTest {
 -------
 """, 5, 10
         )
-        assertEquals(resultCanvas, computedCanvas)
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
     fun testInvalidCanvasInput() {
-        val command = CanvasCommand()
         assertFailsWith<InputValueException>(
-            block = { command.execute(listOf("-1", "2"))}
+            block = { CanvasCommand.execute(testCanvas, listOf("-1", "2"))}
         )
         assertFailsWith<InputValueException> {
-            command.execute(listOf("2", "0"))
+            CanvasCommand.execute(testCanvas, listOf("2", "0"))
         }
     }
 
     @Test
     fun testMissingCanvasInput() {
-        val command = CanvasCommand()
         assertFailsWith<InputValueException> {
-            command.execute(listOf("1"))
+            CanvasCommand.execute(testCanvas, listOf("1"))
         }
     }
 }

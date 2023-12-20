@@ -20,14 +20,13 @@ class LineCommandTest {
 
     @Test
     fun testValidLineInput() {
-        val command = LineCommand(testCanvas)
         val inputArgs = listOf("1", "1", "1", "10")
-        val args = command.validate(inputArgs)
+        val args = LineCommand.validate(testCanvas, inputArgs)
         assertEquals(args[0], Integer.parseInt(inputArgs[0]))
         assertEquals(args[1], Integer.parseInt(inputArgs[1]))
         assertEquals(args[2], Integer.parseInt(inputArgs[2]))
         assertEquals(args[3], Integer.parseInt(inputArgs[3]))
-        command.execute(inputArgs)
+        LineCommand.execute(testCanvas, inputArgs)
         val resultCanvas = readCanvas(
             """
 ----------------------
@@ -44,19 +43,18 @@ class LineCommandTest {
 ----------------------
 """, 20,10
         )
-        assertEquals(resultCanvas, command.canvas)
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
     fun testValidInvertedLineInput() {
-        val command = LineCommand(testCanvas)
         val inputArgs = listOf("20", "5", "1", "5")
-        val args = command.validate(inputArgs)
+        val args = LineCommand.validate(testCanvas, inputArgs)
         assertEquals(args[0], Integer.parseInt(inputArgs[0]))
         assertEquals(args[1], Integer.parseInt(inputArgs[1]))
         assertEquals(args[2], Integer.parseInt(inputArgs[2]))
         assertEquals(args[3], Integer.parseInt(inputArgs[3]))
-        command.execute(inputArgs)
+        LineCommand.execute(testCanvas, inputArgs)
         val resultCanvas = readCanvas(
             """
 ----------------------
@@ -73,33 +71,30 @@ class LineCommandTest {
 ----------------------
 """, 20, 10
         )
-        assertEquals(resultCanvas, command.canvas)
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
     fun testInvalidLineInput() {
-        val command = LineCommand(testCanvas)
         val inputArgs = listOf("1", "2", "3", "4")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            LineCommand.execute(testCanvas, inputArgs)
         }
     }
 
     @Test
     fun testMissingLineInput() {
-        val command = LineCommand(testCanvas)
         val inputArgs = listOf("1", "2", "3")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            LineCommand.execute(testCanvas, inputArgs)
         }
     }
 
     @Test
     fun testOutOfBoundsLineInput() {
-        val command = LineCommand(testCanvas)
         val inputArgs = listOf("1", "2", "1", "100")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            LineCommand.execute(testCanvas, inputArgs)
         }
     }
 }

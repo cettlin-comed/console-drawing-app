@@ -20,14 +20,13 @@ class FillCommandTest {
 
     @Test
     fun testValidFillInput() {
-        val command = FillCommand(testCanvas)
         val inputArgs = listOf("1", "2", "c")
-        val args = command.validate(inputArgs)
+        val args = FillCommand.validate(testCanvas, inputArgs)
         assertEquals(args[0], Integer.parseInt(inputArgs[0]))
         assertEquals(args[1], Integer.parseInt(inputArgs[1]))
         assertEquals(args.size, 2)
         assertEquals('c', inputArgs[2][0])
-        command.execute(inputArgs)
+        FillCommand.execute(testCanvas, inputArgs)
         val resultCanvas = readCanvas(
             """
 ----------------------
@@ -44,46 +43,42 @@ class FillCommandTest {
 ----------------------
 """, 20, 10
         )
-        assertEquals(resultCanvas, command.canvas)
+        assertEquals(resultCanvas, testCanvas)
     }
 
     @Test
     fun testInvalidFillInput() {
-        val command = FillCommand(testCanvas)
         val inputArgs = listOf("1", "2", "3", "4")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            FillCommand.execute(testCanvas, inputArgs)
         }
     }
 
     @Test
     fun testMissingFillInput() {
-        val command = FillCommand(testCanvas)
         val inputArgs = listOf("1", "2")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            FillCommand.execute(testCanvas, inputArgs)
         }
         val inputArgs2 = listOf("1", "c")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs2)
+            FillCommand.execute(testCanvas, inputArgs2)
         }
     }
 
     @Test
     fun testOutOfBoundsFillInput() {
-        val command = FillCommand(testCanvas)
         val inputArgs = listOf("1", "2", "1", "100")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            FillCommand.execute(testCanvas, inputArgs)
         }
     }
 
     @Test
     fun testStringFillInput() {
-        val command = FillCommand(testCanvas)
         val inputArgs = listOf("1", "2", "test")
         assertFailsWith<InputValueException> {
-            command.execute(inputArgs)
+            FillCommand.execute(testCanvas, inputArgs)
         }
     }
 }

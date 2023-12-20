@@ -1,8 +1,8 @@
 
 
-class Canvas(val w: Int, val h: Int) {
+class Canvas(var w: Int, var h: Int) {
 
-    private val canvasArray: Array<CharArray> = initializeCanvas(w, h)
+    private var canvasArray: Array<CharArray> = initializeCanvas(w, h)
 
     private fun initializeCanvas(w: Int, h: Int) : Array<CharArray> {
         val canvasArray = Array(h + 2) { CharArray(w + 2) { ' ' } }
@@ -13,6 +13,12 @@ class Canvas(val w: Int, val h: Int) {
         }
         canvasArray[h + 1] = CharArray(w + 2) { '-' }
         return canvasArray
+    }
+
+    fun drawCanvas(w: Int, h: Int) {
+        this.w = w
+        this.h = h
+        canvasArray = initializeCanvas(w, h)
     }
 
     fun print() {
@@ -91,5 +97,12 @@ class Canvas(val w: Int, val h: Int) {
             s += String(line) + "\n"
         }
         return s
+    }
+
+    override fun hashCode(): Int {
+        var result = w
+        result = 31 * result + h
+        result = 31 * result + canvasArray.contentDeepHashCode()
+        return result
     }
 }
