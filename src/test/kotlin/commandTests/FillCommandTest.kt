@@ -68,9 +68,13 @@ class FillCommandTest {
 
     @Test
     fun testOutOfBoundsFillInput() {
-        val inputArgs = listOf("1", "2", "1", "100")
+        val inputArgs = listOf("1", "200", "c")
         assertFailsWith<InputValueException> {
             FillCommand.execute(testCanvas, inputArgs)
+        }
+        val inputArgs2 = listOf("0", "1", "c")
+        assertFailsWith<InputValueException> {
+            FillCommand.execute(testCanvas, inputArgs2)
         }
     }
 

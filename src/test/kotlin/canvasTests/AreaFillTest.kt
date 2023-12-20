@@ -173,4 +173,38 @@ class AreaFillTest {
         )
         assertEquals(resultCanvas, testCanvas)
     }
+
+    @Test
+    fun fillAlreadyColored() {
+        testCanvas = createTestCanvas()
+        testCanvas.fillArea(3,1, 'x')
+        val resultCanvas = readCanvas(
+"""
+----------------------
+|  x                 |
+|  x xxxxxx          |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x                 |
+|  x    xxxxxxxx     |
+|  x    x      x     |
+|  x    x      x     |
+|  x    x      x     |
+|  x    x      x     |
+|  x    x      x     |
+|  x    x      x     |
+|  x    xxxxxxxx     |
+|  x                 |
+|  x                 |
+|  x              xxx|
+|  x              x x|
+|  x              xxx|
+----------------------
+""", 20, 20
+            )
+            assertEquals(resultCanvas, testCanvas)
+
+    }
 }

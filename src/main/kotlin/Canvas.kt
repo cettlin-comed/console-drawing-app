@@ -60,6 +60,7 @@ class Canvas(var w: Int, var h: Int) {
 
     fun fillArea(x: Int, y: Int, newColor: Char) {
         val previous = canvasArray[y][x]
+        if (previous == newColor) return
         val q: ArrayDeque<Pair<Int, Int>> = ArrayDeque()
         q.add(Pair(x,y))
         while (!q.isEmpty()) {
