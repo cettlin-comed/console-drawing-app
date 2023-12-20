@@ -1,6 +1,5 @@
 import exceptions.InputValueException
 
-
 fun main(args: Array<String>) {
     val controller = AppController()
     runApplication(controller)
