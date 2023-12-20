@@ -2,15 +2,15 @@ import exceptions.InputValueException
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.*
 
-class CanvasControllerTest {
+class AppControllerTest {
 
-    var testController = CanvasController()
+    var testController = AppController()
     val defaultW = 10
     val defaultH = 10
 
     @BeforeTest
     fun resetController() {
-        testController = CanvasController()
+        testController = AppController()
         testController.execute("C", listOf(defaultW.toString(), defaultH.toString()))
     }
 

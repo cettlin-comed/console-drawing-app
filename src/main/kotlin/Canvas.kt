@@ -74,6 +74,14 @@ class Canvas(val w: Int, val h: Int) {
         canvasArray[y][x] = c
     }
 
+    fun isInsideWidth(x: Int) : Boolean {
+        return x in 1..w
+    }
+
+    fun isInsideHeight(y: Int) : Boolean {
+        return y in 1..h
+    }
+
     override fun equals(other: Any?): Boolean =
         (other is Canvas) && canvasArray.contentDeepEquals(other.canvasArray)
 

@@ -2,11 +2,14 @@ import exceptions.InputValueException
 
 
 fun main(args: Array<String>) {
+    val controller = AppController()
+    runApplication(controller)
+}
 
-    val controller = CanvasController()
-
+fun runApplication(controller: AppController) {
     println("Welcome to the Console drawing program, please enter an input command")
     print("enter command: ")
+
     while(true) {
         val input = readln().split(' ')
         try {
@@ -24,4 +27,3 @@ fun main(args: Array<String>) {
         print("enter command: ")
     }
 }
-

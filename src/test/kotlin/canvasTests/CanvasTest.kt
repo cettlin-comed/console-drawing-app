@@ -1,4 +1,4 @@
-package CanvasTests
+package canvasTests
 
 import Canvas
 import org.junit.jupiter.api.Assertions.*
